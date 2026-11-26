@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FINWISE Financial Hub Co.</title>
+<meta name="theme-color" content="#0B1F3B">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FINWISE">
+<meta name="description" content="Think Finance. Think FINWISE. Personal and business finance planning.">
+<meta name="format-detection" content="telephone=no">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================= styles.css ============================= */
+:root{
+  --navy:#0B1F3B;
+  --navy-2:#12284C;
+  --blue:#2F6FED;
+  --blue-dark:#1E4FBF;
+  --blue-light:#E9F1FE;
+  --ink:#16233F;
+  --gray:#5B6B85;
+  --gray-light:#94A3B8;
+  --bg:#F1F4F9;
+  --surface:#FFFFFF;
+  --border:#E1E7F0;
+  --green:#146B3F;
+  --green-bg:#E7F6EE;
+  --red:#C4291C;
+  --red-bg:#FCEAE8;
+  --amber:#B4680A;
+  --amber-bg:#FDF1DF;
+  --radius:12px;
+  --shadow:0 1px 2px rgba(11,31,59,.06), 0 6px 20px rgba(11,31,59,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Sora',system-ui,sans-serif;color:var(--navy);margin:0}
+.num, .money, input, select, textarea{font-variant-numeric: tabular-nums;}
+.mono{font-family:'IBM Plex Mono',monospace; font-variant-numeric: tabular-nums;}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+::selection{background:var(--blue-light)}
+
+/* Layout */
+#app{display:flex;min-height:100vh}
+.sidebar{
+  width:250px;flex-shrink:0;background:var(--navy);
+  color:#DCE6FA;display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand-name{font-family:'Sora';font-weight:800;font-size:19px;color:#fff;letter-spacing:.3px}
+.brand-dot{color:var(--blue)}
+.brand-tag{font-size:11px;color:#9FB3D6;margin-top:4px;font-style:italic}
+.nav-group{padding:10px 10px}
+.nav-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#7288AD;padding:14px 12px 6px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+  font-size:13.5px;color:#C9D7F0;cursor:pointer;margin:1px 0;position:relative;
+  border:none;background:none;width:100%;text-align:left;font-family:inherit;
+}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:var(--blue);color:#fff;font-weight:600}
+.nav-item .lock-ico{margin-left:auto;font-size:11px;opacity:.7}
+.nav-icon{width:18px;text-align:center;font-size:14px}
+.plan-pill{
+  margin:14px 16px;padding:10px 12px;border-radius:10px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  font-size:12px;color:#C9D7F0;
+}
+.plan-pill b{color:#fff;display:block;font-size:13px;margin-bottom:2px}
+
+.main{flex:1;min-width:0}
+.topbar{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:14px 28px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:5;
+}
+.topbar h1{font-size:20px}
+.topbar .sub{color:var(--gray);font-size:12.5px;margin-top:2px}
+.hamburger{display:none;background:none;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:16px}
+.content{padding:26px 28px 60px;max-width:1180px}
+
+/* Cards */
+.grid{display:grid;gap:16px}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:var(--shadow);
+}
+.stat-card .label{font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.stat-card .value{font-family:'IBM Plex Mono';font-size:24px;font-weight:600;color:var(--navy);margin-top:6px}
+.stat-card .foot{font-size:11.5px;color:var(--gray-light);margin-top:4px}
+.stat-card.accent-blue{border-top:3px solid var(--blue)}
+.stat-card.accent-green{border-top:3px solid var(--green)}
+.stat-card.accent-red{border-top:3px solid var(--red)}
+.stat-card.accent-navy{border-top:3px solid var(--navy)}
+
+.section-title{display:flex;align-items:baseline;justify-content:space-between;margin:28px 0 12px}
+.section-title h2{font-size:16px}
+.rule{height:1px;background:linear-gradient(90deg,var(--border),transparent);margin-top:6px}
+
+/* Forms */
+label{display:block;font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:5px}
+.field{margin-bottom:14px}
+.help{font-size:11.5px;color:var(--gray);margin-top:4px}
+input[type=text],input[type=number],input[type=email],input[type=date],input[type=password],select,textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;
+  font-size:14px;background:#fff;color:var(--ink);
+}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+textarea{resize:vertical;min-height:80px;font-family:inherit}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;
+  border:none;font-weight:600;font-size:13.5px;background:var(--blue);color:#fff;
+}
+.btn:hover{background:var(--blue-dark)}
+.btn.secondary{background:var(--surface);color:var(--navy);border:1px solid var(--border)}
+.btn.secondary:hover{background:var(--blue-light)}
+.btn.danger{background:var(--red-bg);color:var(--red)}
+.btn.ghost{background:none;color:var(--blue);padding:6px 8px}
+.btn.small{padding:6px 10px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.error-msg{color:var(--red);font-size:12.5px;margin-top:6px;font-weight:600}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray);
+  padding:8px 10px;border-bottom:2px solid var(--border)}
+td{padding:10px;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+.tag{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;background:var(--blue-light);color:var(--blue-dark);font-weight:600}
+.empty-row{text-align:center;color:var(--gray);padding:24px;font-size:13px}
+
+/* Progress bar */
+.progress-wrap{background:#EAEFF7;border-radius:20px;height:12px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),#5FA0FF);border-radius:20px;transition:width .4s ease}
+.progress-fill.green{background:linear-gradient(90deg,var(--green),#3FBE7E)}
+
+/* Result banner */
+.result-box{margin-top:16px;padding:16px 18px;border-radius:10px;background:var(--blue-light);border:1px solid #CFE1FD}
+.result-box.profit{background:var(--green-bg);border-color:#BEE7CF}
+.result-box.loss{background:var(--red-bg);border-color:#F5C9C4}
+.result-box .big{font-family:'IBM Plex Mono';font-size:26px;font-weight:700;color:var(--navy)}
+.result-box .big.profit{color:var(--green)}
+.result-box .big.loss{color:var(--red)}
+.result-line{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0;color:var(--gray)}
+.result-line b{color:var(--ink);font-family:'IBM Plex Mono'}
+
+/* Education cards */
+.lesson-card{cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
+.lesson-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,31,59,.1)}
+.lesson-icon{font-size:24px}
+.lesson-body{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:13.5px;line-height:1.6;color:var(--ink)}
+.lesson-body.open{display:block}
+.lesson-body ul{margin:8px 0;padding-left:20px}
+
+/* Steps */
+.step-row{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.step-row:last-child{border-bottom:none}
+.step-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;cursor:pointer}
+.step-check.done{background:var(--green);border-color:var(--green)}
+.step-title{font-weight:600;font-size:14px}
+.step-title.done{text-decoration:line-through;color:var(--gray-light)}
+.step-desc{font-size:12.5px;color:var(--gray);margin-top:2px}
+
+/* Pricing */
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.plan-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.plan-card.current{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue) inset, var(--shadow)}
+.plan-card.expired{border-color:var(--red)}
+.plan-card .pname{font-family:'Sora';font-weight:700;font-size:16px;color:var(--navy)}
+.plan-card .pprice{font-family:'IBM Plex Mono';font-size:24px;font-weight:700;margin:8px 0 2px}
+.plan-card .pperiod{font-size:11.5px;color:var(--gray)}
+.plan-card .pdesc{font-size:12.5px;color:var(--gray);line-height:1.55;margin:12px 0;flex:1}
+.badge-current{align-self:flex-start;background:var(--green-bg);color:var(--green);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.badge-expired{align-self:flex-start;background:var(--red-bg);color:var(--red);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+
+/* Lock overlay */
+.locked-card{padding:40px 30px;text-align:center;background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius)}
+.locked-card .lk{font-size:34px}
+.locked-card h3{margin-top:10px}
+.locked-card p{color:var(--gray);font-size:13.5px;max-width:440px;margin:8px auto 18px;line-height:1.6}
+.plan-chip{display:inline-block;background:var(--blue-light);color:var(--blue-dark);font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:20px;margin:2px}
+
+/* Toast */
+#toast-container{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--navy);color:#fff;padding:12px 16px;border-radius:8px;font-size:13px;box-shadow:var(--shadow);animation:slidein .25s ease}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+@keyframes slidein{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.footer-disclaimer{margin-top:40px;padding:16px 18px;background:var(--blue-light);border-radius:10px;font-size:11.5px;color:var(--navy-2);line-height:1.6}
+
+.quick-btn{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:#fff;font-size:13px;font-weight:600;color:var(--navy)}
+.quick-btn:hover{background:var(--blue-light);border-color:var(--blue)}
+
+/* Auth screen */
+.auth-shell{min-height:100vh;width:100%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 20% 20%, #12294D 0%, #0B1F3B 55%, #081527 100%);padding:20px}
+.auth-card{width:100%;max-width:400px;background:var(--surface);border-radius:16px;padding:30px 28px 26px;
+  box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.auth-brand{text-align:center;margin-bottom:6px}
+.auth-brand .brand-name{font-family:'Sora';font-weight:800;font-size:24px;color:var(--navy)}
+.auth-brand .brand-tag{font-size:12px;color:var(--gray);font-style:italic;margin-top:2px}
+.auth-tabs{display:flex;background:var(--bg);border-radius:10px;padding:4px;margin:22px 0 20px}
+.auth-tab{flex:1;text-align:center;padding:9px;border-radius:8px;border:none;background:none;
+  font-family:inherit;font-weight:600;font-size:13px;color:var(--gray);cursor:pointer}
+.auth-tab.active{background:var(--surface);color:var(--navy);box-shadow:0 1px 3px rgba(11,31,59,.15)}
+.auth-guest{text-align:center;margin-top:16px;font-size:12.5px;color:var(--gray)}
+.auth-guest button{background:none;border:none;color:var(--blue);font-weight:600;font-family:inherit;cursor:pointer;padding:0}
+.auth-note{font-size:11px;color:var(--gray);text-align:center;margin-top:18px;line-height:1.6}
+.auth-switch{text-align:center;font-size:12.5px;color:var(--gray);margin-top:14px}
+.auth-switch button{background:none;border:none;color:var(--blue);font-weight:600;font-family:inherit;cursor:pointer;padding:0}
+
+/* Terms and conditions */
+.terms-row{display:flex;align-items:flex-start;gap:8px;margin:4px 0 2px;font-size:12.5px;color:var(--gray);line-height:1.5}
+.terms-row input[type=checkbox]{width:16px;height:16px;margin-top:1px;flex-shrink:0;accent-color:var(--blue);cursor:pointer}
+.terms-row .terms-link{background:none;border:none;color:var(--blue);font-weight:600;font-size:12.5px;
+  font-family:inherit;cursor:pointer;padding:0;text-decoration:underline}
+.modal-overlay{position:fixed;inset:0;background:rgba(11,31,59,.55);z-index:100;display:flex;
+  align-items:center;justify-content:center;padding:20px}
+.modal-overlay[hidden]{display:none}
+.modal{background:var(--surface);border-radius:14px;max-width:520px;width:100%;max-height:80vh;
+  display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+.modal-head h3{font-size:16px}
+.modal-close{background:none;border:none;font-size:18px;color:var(--gray);cursor:pointer}
+.modal-body{padding:16px 20px;overflow-y:auto;font-size:12.5px;color:var(--ink);line-height:1.65}
+.modal-body h4{font-size:13px;margin:14px 0 4px}
+.modal-body h4:first-child{margin-top:0}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+
+/* Sidebar profile */
+.profile-block{margin:12px 16px 0;padding:12px;border-radius:10px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px}
+.profile-avatar{width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.profile-info{min-width:0;flex:1}
+.profile-name{font-size:12.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-email{font-size:10.5px;color:#9FB3D6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logout-btn{background:none;border:none;color:#9FB3D6;font-size:15px;cursor:pointer;flex-shrink:0}
+.logout-btn:hover{color:#fff}
+
+@media (max-width:980px){
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:repeat(2,1fr)}
+  .plans-grid{grid-template-columns:1fr}
+}
+/* Install button */
+.install-btn{display:none;align-items:center;gap:6px}
+.install-btn.show{display:inline-flex}
+
+/* Bottom app nav (mobile) */
+.bottom-nav{display:none}
+.sidebar-backdrop{display:none}
+
+@media (max-width:760px){
+  .sidebar{position:fixed;left:-260px;z-index:30;transition:left .2s ease;box-shadow:4px 0 20px rgba(0,0,0,.25);
+    padding-top:env(safe-area-inset-top)}
+  .sidebar.open{left:0}
+  .sidebar-backdrop.open{display:block;position:fixed;inset:0;background:rgba(11,31,59,.35);z-index:25}
+  .hamburger{display:inline-block}
+  .grid-4,.grid-3,.grid-2{grid-template-columns:1fr}
+  .content{padding:16px 16px calc(90px + env(safe-area-inset-bottom))}
+  .topbar{padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+  .btn.secondary.small[data-nav="subscription"]{display:none}
+  #save-indicator{display:none}
+
+  .bottom-nav{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:15;
+    background:var(--surface);border-top:1px solid var(--border);
+    padding:6px 2px calc(6px + env(safe-area-inset-bottom));
+    box-shadow:0 -4px 16px rgba(11,31,59,.08);
+  }
+  .bottom-nav-item{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:6px 2px;background:none;border:none;font-family:inherit;
+    font-size:10px;color:var(--gray-light);
+  }
+  .bottom-nav-item .bn-icon{font-size:19px;line-height:1}
+  .bottom-nav-item.active{color:var(--blue);font-weight:700}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast-container"></div>
+<script>
+/* ============================= app.js ============================= */
+
+/* ============================= DATA / CONSTANTS ============================= */
+
+const STORAGE_KEY = 'finwise-state-v1';
+
+const defaultState = () => ({
+  budgeting: { income:'', savings:'', spendingLimit:'' },
+  expenses: [],
+  savingsPlanner: { goal:'', current:'', monthly:'' },
+  businessSteps: Array(9).fill(false),
+  businessBudget: { revenue:'', expenses:'' },
+  startupCosts: { equipment:'', furniture:'', leasehold:'', registration:'', supplies:'', marketing:'', other:'' },
+  pnl: { revenue:'', cost:'', opex:'' },
+  breakEven: { fixed:'', price:'', variable:'' },
+  goals: [],
+  templates: {},
+  consultations: [],
+  // New users start with NO active plan: planId is null so the "No active plan"
+  // state is shown and tools unlock only after the user subscribes.
+  subscription: { planId: null, cycle: 'yearly', subscribedAt: null, expiresAt: null, cancelled: false },
+  meta: { lessonOpen:null }
+});
+
+let state = defaultState();
+let stateLoaded = false;
+
+const EXPENSE_CATEGORIES = ['Food','Transportation','Utilities','Education','Business','Other'];
+
+const BUSINESS_STEPS = [
+  {t:'Choose and validate a business idea', d:'Test your idea against a real need in the market before committing money.'},
+  {t:'Identify target customers', d:'Define who will actually buy from you — age, needs, income, location.'},
+  {t:'Analyze competitors', d:'Study who else offers something similar and how you will stand out.'},
+  {t:'Estimate start-up costs', d:'List everything you need to spend before you open your doors.'},
+  {t:'Prepare a business plan', d:'Write down your concept, market, operations, and goals in one document.'},
+  {t:'Prepare a financial plan', d:'Project your revenue, expenses, and break-even point.'},
+  {t:'Check registration and permit requirements', d:'Confirm DTI/SEC, BIR, and local permits needed for your business type.'},
+  {t:'Set up records and financial monitoring', d:'Decide how you will track income, expenses, and cash flow from day one.'},
+  {t:'Prepare marketing strategies', d:'Plan how customers will find out about you and why they should choose you.'}
+];
+
+const LESSONS = [
+  {id:'l1', icon:'📊', title:'Budgeting Basics', summary:'Give every peso a job before the month begins.',
+   body:`<p>A budget is simply a plan for your money before you spend it. The most common approach is the <b>50/30/20 rule</b>: 50% of income for needs (rent, food, utilities), 30% for wants (leisure, dining out), and 20% for savings and debt repayment.</p>
+   <ul><li>Start by listing your actual monthly income after tax.</li><li>List fixed expenses first (rent, loan payments), then variable ones (food, transport).</li><li>Review your budget monthly — it should change as your life does.</li></ul>`},
+  {id:'l2', icon:'🛟', title:'Savings and Emergency Funds', summary:'Build a cushion before you build wealth.',
+   body:`<p>An emergency fund is money set aside only for real emergencies — job loss, medical bills, urgent repairs. Most experts suggest saving <b>3 to 6 months</b> of essential expenses.</p>
+   <ul><li>Keep it in a separate, easily accessible savings account.</li><li>Start small — even ₱500 a month builds momentum.</li><li>Rebuild it immediately after you use it.</li></ul>`},
+  {id:'l3', icon:'🛒', title:'Smart Spending', summary:'Spend on purpose, not on impulse.',
+   body:`<p>Smart spending means matching your purchases to your actual priorities and values, not to advertising or peer pressure.</p>
+   <ul><li>Use the 24-hour rule for non-essential purchases over a set amount.</li><li>Track where your money actually goes for one month — it's often surprising.</li><li>Compare prices and consider needs versus wants before buying.</li></ul>`},
+  {id:'l4', icon:'💳', title:'Debt Awareness', summary:'Understand debt before it controls you.',
+   body:`<p>Not all debt is bad — a loan for education or a home can build your future. The danger is high-interest, unplanned debt like credit card balances that roll over.</p>
+   <ul><li>Always know your interest rate and minimum payment.</li><li>Pay more than the minimum whenever possible to reduce interest paid.</li><li>Avoid borrowing to cover recurring living expenses — that's a warning sign.</li></ul>`},
+  {id:'l5', icon:'🏢', title:'Basic Business Finance', summary:'Separate your business money from your personal money.',
+   body:`<p>Every business, no matter how small, needs to track money in (revenue) and money out (expenses) separately from personal finances.</p>
+   <ul><li>Open a separate account or wallet for the business as soon as possible.</li><li>Record every transaction, even small ones — they add up.</li><li>Know your break-even point: the sales level where you stop losing money.</li></ul>`},
+  {id:'l6', icon:'🎯', title:'Financial Goal Setting', summary:'Turn "someday" into a plan with a number and a date.',
+   body:`<p>A financial goal works best when it is specific and measurable — a target amount and a target date, not just "save more."</p>
+   <ul><li>Break big goals into monthly contribution amounts.</li><li>Track progress regularly so small wins keep you motivated.</li><li>Revisit goals when your income or priorities change.</li></ul>`}
+];
+
+const TOOLS_META = {
+  education:        { label:'Financial Education Hub' },
+  budgeting:         { label:'Budgeting Tool' },
+  expenses:          { label:'Expense Tracker' },
+  savings:           { label:'Savings Planner' },
+  goals:             { label:'Financial Goals Planner' },
+  reports:           { label:'Financial Reports' },
+  'business-guide':  { label:'Business Start-Up Guide' },
+  'business-budget': { label:'Business Budget Planner' },
+  'startup-cost':    { label:'Start-Up Cost Calculator' },
+  pnl:               { label:'Profit &amp; Loss Calculator' },
+  breakeven:         { label:'Break-Even Calculator' },
+  templates:         { label:'Business Planning Templates' },
+};
+
+const PLANS = [
+  { id:'basic', name:'FINWISE Basic', price:499,
+    tagline:'For students, employees, and individuals just beginning to learn about personal finance.',
+    desc:'Basic financial education, budgeting lessons, expense tracking, savings goal setting, and simple calculators. Record income and daily expenses, categorize spending, build a monthly budget, and monitor savings progress.',
+    tools:['education','budgeting','expenses','savings'] },
+  { id:'plus', name:'FINWISE Plus', price:999,
+    tagline:'For users who want more advanced personal financial management tools.',
+    desc:'Everything in Basic, plus detailed budgeting tools, financial progress reports, spending analysis, customized savings goals, and extra calculators to reduce unnecessary expenses and improve savings.',
+    tools:['education','budgeting','expenses','savings','goals','reports'] },
+  { id:'entrepreneur', name:'FINWISE Entrepreneur', price:1499,
+    tagline:'For individuals planning to start a business.',
+    desc:'Organize your business idea from a financial perspective: start-up cost estimation, capital planning, expense forecasting, revenue and profit calculations, pricing assistance, and break-even analysis.',
+    tools:['education','business-guide','startup-cost','business-budget','pnl','breakeven'] },
+  { id:'businesspro', name:'FINWISE Business Pro', price:2499,
+    tagline:'For small business owners who need comprehensive monitoring tools.',
+    desc:'Business expense tracking, revenue monitoring, profit analysis, budgeting, cash-flow planning, financial summaries, and business performance reports.',
+    tools:['education','business-guide','expenses','startup-cost','business-budget','pnl','breakeven','reports'] },
+  { id:'learninghub', name:'Financial Learning Hub', price:399,
+    tagline:'A collection of resources to improve financial literacy.',
+    desc:'Budgeting, saving, managing expenses, emergency funds, debt management, basic investing concepts, financial planning, entrepreneurship, business costs, pricing, profit, and cash flow — in one learning hub.',
+    tools:['education'] },
+  { id:'planningpackage', name:'Business Planning Package', price:1199,
+    tagline:'Structured tools for a basic business financial plan.',
+    desc:'Estimate start-up capital, identify operating expenses, prepare revenue projections, calculate expected profits, determine break-even points, and use business-planning templates and worksheets.',
+    tools:['startup-cost','business-budget','pnl','breakeven','templates'] },
+  { id:'premium', name:'FINWISE Premium', price:1999,
+    tagline:'The complete package — personal finance and business planning together.',
+    desc:'Advanced budgeting, expense tracking, savings goals, financial education, financial calculators, business start-up planning, profit analysis, break-even calculations, and full financial reports. All-in-one.',
+    tools:['education','budgeting','expenses','savings','goals','reports','business-guide','business-budget','startup-cost','pnl','breakeven','templates'] },
+];
+
+const TEMPLATE_DEFS = [
+  { id:'bizplan', title:'Basic Business Plan', fields:['Business Name','Business Concept','Target Market','Products / Services','Competitive Advantage','Owner / Team'] },
+  { id:'bizbudget', title:'Business Budget', fields:['Expected Monthly Revenue','Rent / Utilities','Supplies / Inventory','Salaries / Labor','Marketing','Other Costs'] },
+  { id:'finproj', title:'Financial Projection', fields:['Year 1 Revenue','Year 1 Expenses','Year 2 Revenue','Year 2 Expenses','Assumptions'] },
+  { id:'startupplan', title:'Start-Up Cost Plan', fields:['Equipment','Registration & Permits','Initial Inventory','Marketing Launch','Contingency Fund'] },
+  { id:'incexp', title:'Income and Expense Record', fields:['Date Range','Total Income','Total Expenses','Notes'] },
+];
+
+const NAV_STRUCTURE = [
+  { label:'Overview', items:[ {id:'dashboard', label:'Dashboard', icon:'🏠'} ] },
+  { label:'Personal Finance', items:[
+    {id:'budgeting', label:'Budgeting Tool', icon:'🧮'},
+    {id:'expenses', label:'Expense Tracker', icon:'🧾'},
+    {id:'savings', label:'Savings Planner', icon:'💰'},
+    {id:'goals', label:'Financial Goals', icon:'🎯'},
+    {id:'education', label:'Education Hub', icon:'📚'},
+  ]},
+  { label:'Business Planning', items:[
+    {id:'business-guide', label:'Start-Up Guide', icon:'🚀'},
+    {id:'business-budget', label:'Business Budget', icon:'📈'},
+    {id:'startup-cost', label:'Start-Up Cost Calc.', icon:'🧱'},
+    {id:'pnl', label:'Profit &amp; Loss', icon:'💹'},
+    {id:'breakeven', label:'Break-Even Calc.', icon:'⚖️'},
+    {id:'templates', label:'Planning Templates', icon:'📄'},
+  ]},
+  { label:'Account', items:[
+    {id:'reports', label:'Financial Reports', icon:'📋'},
+    {id:'subscription', label:'Subscription', icon:'⭐'},
+    {id:'support', label:'Consultation', icon:'💬'},
+  ]}
+];
+
+/* ============================= AUTH ============================= */
+
+const USERS_KEY = 'finwise-users-v1';
+const SESSION_KEY = 'finwise-session-v1';
+const GUEST_STATE_KEY = STORAGE_KEY; // legacy single-user key, reused for guest sessions
+
+/* localStorage-backed persistence adapter (async API) */
+window.storage = {
+  async get(key){
+    try{
+      const v = localStorage.getItem(key);
+      return (v === null) ? null : { value: v };
+    }catch(e){ return null; }
+  },
+  async set(key, value){
+    try{ localStorage.setItem(key, value); return true; }
+    catch(e){ throw e; }
+  },
+  async delete(key){
+    try{ localStorage.removeItem(key); return true; }catch(e){ return false; }
+  }
+};
+
+let users = [];
+let currentUser = null; // {id, name, email, guest}
+
+function hashPass(pw){
+  // Lightweight obfuscation only — this is a local demo login, not secure authentication.
+  let h = 5381;
+  for(let i=0;i<pw.length;i++){ h = ((h*33) ^ pw.charCodeAt(i)) >>> 0; }
+  return h.toString(36) + '-' + pw.length;
+}
+function emailValid(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+function stateKeyFor(user){ return user.guest ? GUEST_STATE_KEY : ('finwise-state-' + user.id); }
+
+async function loadUsers(){
+  try{
+    const res = await window.storage.get(USERS_KEY, false);
+    users = (res && res.value) ? JSON.parse(res.value) : [];
+  }catch(e){ users = []; }
+}
+async function saveUsers(){
+  try{ await window.storage.set(USERS_KEY, JSON.stringify(users), false); }
+  catch(e){ toast('Could not save account data.', 'error'); }
+}
+async function loadSession(){
+  try{
+    const res = await window.storage.get(SESSION_KEY, false);
+    if(res && res.value){
+      const sess = JSON.parse(res.value);
+      if(sess.guest){ currentUser = {id:'guest', name:'Guest', email:null, guest:true}; return; }
+      const u = users.find(u=>u.id===sess.userId);
+      if(u) currentUser = {id:u.id, name:u.name, email:u.email, guest:false};
+    }
+  }catch(e){ currentUser = null; }
+}
+async function saveSession(){
+  try{
+    const payload = currentUser.guest ? {guest:true} : {userId: currentUser.id};
+    await window.storage.set(SESSION_KEY, JSON.stringify(payload), false);
+  }catch(e){}
+}
+async function clearSession(){
+  try{ await window.storage.delete(SESSION_KEY, false); }catch(e){}
+}
+
+function signUp(name, email, password){
+  const exists = users.some(u=>u.email.toLowerCase()===email.toLowerCase());
+  if(exists) return {ok:false, error:'An account with this email already exists. Try logging in instead.'};
+  const user = {id: uid(), name, email, passHash: hashPass(password), createdAt: new Date().toISOString()};
+  users.push(user);
+  saveUsers();
+  return {ok:true, user};
+}
+function logIn(email, password){
+  const u = users.find(u=>u.email.toLowerCase()===email.toLowerCase());
+  if(!u || u.passHash !== hashPass(password)) return {ok:false, error:'Incorrect email or password.'};
+  return {ok:true, user:u};
+}
+
+async function afterAuth(user){
+  currentUser = {id:user.id, name:user.name, email:user.email, guest: !!user.guest};
+  await saveSession();
+  await loadState();
+  renderApp();
+  toast(currentUser.guest ? 'Continuing as guest.' : ('Welcome, ' + currentUser.name + '.'), 'success');
+}
+
+async function logOut(){
+  await flushState();          // persist any debounced changes before dropping state
+  await clearSession();
+  currentUser = null;
+  state = defaultState();
+  stateLoaded = false;
+  renderAuthScreen('login');
+  toast('Logged out.');
+}
+
+/* ---------- Terms & Conditions ---------- */
+
+const TERMS_HTML = `
+  <h4>1. About FINWISE</h4>
+  <p>FINWISE is a financial learning and planning hub. It provides budgeting tools, savings planners, educational lessons, and business planning calculators for personal and small-business use.</p>
+  <h4>2. Not professional financial advice</h4>
+  <p>All content, calculators, and templates are for educational purposes only. FINWISE does not provide licensed investment, legal, tax, or accounting advice. Always consult a qualified professional before making financial decisions.</p>
+  <h4>3. Your account</h4>
+  <p>You are responsible for keeping your login credentials safe. Accounts in this version are stored locally on your device and are not verified by a server — do not reuse a password you use elsewhere.</p>
+  <h4>4. Your data</h4>
+  <p>Financial data you enter (income, expenses, goals, business figures) is stored on your own device. You may delete your account and its data at any time from the Subscription page.</p>
+  <h4>5. Subscriptions &amp; billing</h4>
+  <p>Plans renew automatically at the end of each billing cycle (monthly or yearly) unless cancelled. Cancelling stops future renewals but keeps your access until the current period ends. In this demo no real payment is processed.</p>
+  <h4>6. Acceptable use</h4>
+  <p>Do not misuse the platform, attempt to disrupt it, or use it for unlawful purposes. Lesson and template content may not be resold or redistributed without permission.</p>
+  <h4>7. Changes to these terms</h4>
+  <p>FINWISE may update these terms from time to time. Continued use of the platform after an update means you accept the revised terms.</p>
+`;
+
+function openModal(title, bodyHtml){
+  closeModal();
+  const ov = document.createElement('div');
+  ov.className = 'modal-overlay';
+  ov.id = 'tc-modal';
+  ov.innerHTML = `
+    <div class="modal" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+      <div class="modal-head"><h3>${esc(title)}</h3><button class="modal-close" aria-label="Close">&#10005;</button></div>
+      <div class="modal-body">${bodyHtml}</div>
+      <div class="modal-foot"><button class="btn secondary small" id="modal-ok-btn">Done</button></div>
+    </div>`;
+  document.body.appendChild(ov);
+  ov.querySelector('.modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-ok-btn').addEventListener('click', closeModal);
+  ov.addEventListener('click', e => { if(e.target === ov) closeModal(); });
+}
+function closeModal(){
+  const ov = document.getElementById('tc-modal');
+  if(ov) ov.remove();
+}
+
+function renderAuthScreen(mode){
+  document.getElementById('app').innerHTML = authScreenHtml(mode);
+  bindAuthEvents(mode);
+}
+
+function authScreenHtml(mode){
+  const isLogin = mode === 'login';
+  return `
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="brand-name" style="color:var(--navy)">FINWISE<span class="brand-dot">.</span></div>
+        <div class="brand-tag">"Think Finance. Think FINWISE."</div>
+      </div>
+      <div class="auth-tabs">
+        <button class="auth-tab ${isLogin?'active':''}" data-tab="login">Log In</button>
+        <button class="auth-tab ${!isLogin?'active':''}" data-tab="signup">Sign Up</button>
+      </div>
+      ${isLogin ? `
+        <div class="field"><label>Email</label><input type="email" id="au-login-email" placeholder="you@email.com"></div>
+        <div class="field"><label>Password</label><input type="password" id="au-login-pass" placeholder="••••••••"></div>
+        <div id="au-error"></div>
+        <button class="btn" id="au-login-btn" style="width:100%;justify-content:center">Log In</button>
+        <div class="auth-switch">New to FINWISE? <button data-switch="signup">Create an account</button></div>
+      ` : `
+        <div class="field"><label>Full Name</label><input type="text" id="au-name" placeholder="Juan Dela Cruz"></div>
+        <div class="field"><label>Email</label><input type="email" id="au-email" placeholder="you@email.com"></div>
+        <div class="field"><label>Password</label><input type="password" id="au-pass" placeholder="At least 6 characters"></div>
+        <div class="field"><label>Confirm Password</label><input type="password" id="au-pass2" placeholder="Re-enter password"></div>
+        <div id="au-error"></div>
+        <div class="terms-row">
+          <input type="checkbox" id="au-terms">
+          <label for="au-terms">I have read and agree to the <button type="button" class="terms-link" id="au-terms-link">Terms &amp; Conditions</button>.</label>
+        </div>
+        <button class="btn" id="au-signup-btn" style="width:100%;justify-content:center;margin-top:8px">Create Account</button>
+        <div class="auth-switch">Already have an account? <button data-switch="login">Log in</button></div>
+      `}
+      <div class="auth-guest"><button id="au-guest">Continue as Guest instead →</button></div>
+      <div class="auth-note">This is a local demo login: accounts and passwords are stored only in your FINWISE data and are not verified by a real server. Don't reuse a password you use elsewhere.</div>
+    </div>
+  </div>`;
+}
+
+function bindAuthEvents(mode){
+  document.querySelectorAll('[data-tab]').forEach(btn=>{
+    btn.addEventListener('click', ()=> renderAuthScreen(btn.getAttribute('data-tab')));
+  });
+  document.querySelectorAll('[data-switch]').forEach(btn=>{
+    btn.addEventListener('click', ()=> renderAuthScreen(btn.getAttribute('data-switch')));
+  });
+  document.getElementById('au-guest').addEventListener('click', ()=> afterAuth({id:'guest', name:'Guest', email:null, guest:true}));
+  const termsLink = document.getElementById('au-terms-link');
+  if(termsLink) termsLink.addEventListener('click', ()=> openModal('Terms & Conditions', TERMS_HTML));
+
+  if(mode === 'login'){
+    document.getElementById('au-login-btn').addEventListener('click', ()=>{
+      const email = val('au-login-email').trim(), pass = val('au-login-pass');
+      const err = document.getElementById('au-error');
+      if(!emailValid(email) || !pass){ err.innerHTML = `<div class="error-msg">Enter a valid email and your password.</div>`; return; }
+      const res = logIn(email, pass);
+      if(!res.ok){ err.innerHTML = `<div class="error-msg">${esc(res.error)}</div>`; return; }
+      err.innerHTML = '';
+      afterAuth(res.user);
+    });
+  } else {
+    document.getElementById('au-signup-btn').addEventListener('click', ()=>{
+      const name = val('au-name').trim(), email = val('au-email').trim(), pass = val('au-pass'), pass2 = val('au-pass2');
+      const err = document.getElementById('au-error');
+      if(!name){ err.innerHTML = `<div class="error-msg">Enter your full name.</div>`; return; }
+      if(!emailValid(email)){ err.innerHTML = `<div class="error-msg">Enter a valid email address.</div>`; return; }
+      if(pass.length < 6){ err.innerHTML = `<div class="error-msg">Password must be at least 6 characters.</div>`; return; }
+      if(pass !== pass2){ err.innerHTML = `<div class="error-msg">Passwords do not match.</div>`; return; }
+      const termsBox = document.getElementById('au-terms');
+      if(!termsBox || !termsBox.checked){ err.innerHTML = `<div class="error-msg">Please read and accept the Terms &amp; Conditions to continue.</div>`; return; }
+      const res = signUp(name, email, pass);
+      if(!res.ok){ err.innerHTML = `<div class="error-msg">${esc(res.error)}</div>`; return; }
+      err.innerHTML = '';
+      afterAuth(res.user);
+    });
+  }
+}
+
+/* ============================= STORAGE ============================= */
+
+async function loadState(){
+  try{
+    const res = await window.storage.get(stateKeyFor(currentUser), false);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      state = Object.assign(defaultState(), parsed);
+      // deep-merge nested defaults for safety
+      state.budgeting = Object.assign(defaultState().budgeting, parsed.budgeting||{});
+      state.savingsPlanner = Object.assign(defaultState().savingsPlanner, parsed.savingsPlanner||{});
+      state.businessBudget = Object.assign(defaultState().businessBudget, parsed.businessBudget||{});
+      state.startupCosts = Object.assign(defaultState().startupCosts, parsed.startupCosts||{});
+      state.pnl = Object.assign(defaultState().pnl, parsed.pnl||{});
+      state.breakEven = Object.assign(defaultState().breakEven, parsed.breakEven||{});
+      state.subscription = Object.assign(defaultState().subscription, parsed.subscription||{});
+      migrateSubscription(state.subscription);
+      if(!Array.isArray(state.expenses)) state.expenses = [];
+      if(!Array.isArray(state.goals)) state.goals = [];
+      if(!Array.isArray(state.consultations)) state.consultations = [];
+      if(!Array.isArray(state.businessSteps) || state.businessSteps.length!==9) state.businessSteps = Array(9).fill(false);
+    }
+  }catch(e){
+    // no existing record yet — start fresh
+    state = defaultState();
+  }
+  stateLoaded = true;
+}
+
+let saveTimer = null;
+function saveState(){
+  clearTimeout(saveTimer);
+  const user = currentUser;            // snapshot owner at call time
+  const snapshot = JSON.stringify(state); // snapshot data at call time
+  return new Promise((resolve)=>{
+    saveTimer = setTimeout(async ()=>{
+      try{
+        await window.storage.set(stateKeyFor(user), snapshot, false);
+        markSaved();
+      }catch(e){
+        toast('Could not save your data. Please try again.', 'error');
+      }
+      resolve();
+    }, 500);
+  });
+}
+
+/* Write any pending changes immediately (used before logout / unload). */
+async function flushState(){
+  if(!currentUser) return;
+  clearTimeout(saveTimer);
+  try{
+    await window.storage.set(stateKeyFor(currentUser), JSON.stringify(state), false);
+    markSaved();
+  }catch(e){
+    toast('Could not save your data. Please try again.', 'error');
+  }
+}
+
+function markSaved(){
+  const el = document.getElementById('save-indicator');
+  if(el) el.textContent = '✓ Saved ' + new Date().toLocaleTimeString('en-PH', {hour:'2-digit', minute:'2-digit'});
+}
+
+/** Wires up "save as you type" for a set of inputs on the currently rendered page.
+ *  fields: array of [inputId, (value)=>void] pairs. Each setter writes into `state`. */
+function bindAutosave(fields){
+  fields.forEach(([inputId, setter])=>{
+    const el = document.getElementById(inputId);
+    if(!el) return;
+    el.addEventListener('input', ()=>{ setter(el.value); saveState(); });
+  });
+}
+
+/* ============================= HELPERS ============================= */
+
+function peso(n){
+  n = Number(n)||0;
+  const neg = n < 0;
+  const s = Math.abs(n).toLocaleString('en-PH', {minimumFractionDigits:2, maximumFractionDigits:2});
+  return (neg?'-':'') + '₱' + s;
+}
+function num(v){ const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+function val(id){ const el = document.getElementById(id); return el ? el.value : ''; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function uid(){ return 'id'+Date.now()+Math.floor(Math.random()*1000); }
+
+function toast(msg, type){
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type?(' '+type):'');
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(()=>t.remove(), 3200);
+}
+
+/* ---------- Real subscription model (subscribe / renew / cancel / expiry) ---------- */
+
+const SUB_CYCLE_MS = { monthly: 30*24*60*60*1000, yearly: 365*24*60*60*1000 };
+
+function planCyclePrice(plan, cycle){
+  return cycle === 'monthly' ? Math.max(1, Math.round(plan.price/12)) : plan.price;
+}
+
+function migrateSubscription(sub){
+  // Older saved states may lack expiry/cycle fields — give them a sane, active window.
+  const now = Date.now();
+  if(!sub.cycle || !SUB_CYCLE_MS[sub.cycle]) sub.cycle = 'yearly';
+  if(!sub.expiresAt){
+    const base = sub.subscribedAt ? new Date(sub.subscribedAt).getTime() : now;
+    sub.expiresAt = new Date(Math.max(base, now) + SUB_CYCLE_MS[sub.cycle]).toISOString();
+  }
+  if(typeof sub.cancelled !== 'boolean') sub.cancelled = false;
+}
+
+function subscriptionActive(){
+  const s = state.subscription;
+  if(!s || !s.planId) return false;
+  if(!s.expiresAt) return true; // legacy state without expiry stays active until migrated
+  return Date.now() < new Date(s.expiresAt).getTime();
+}
+
+function subscriptionStatus(){
+  const s = state.subscription || {};
+  if(!s.planId) return { key:'none', label:'No active plan' };
+  const plan = PLANS.find(p=>p.id===s.planId);
+  const exp = s.expiresAt ? new Date(s.expiresAt) : null;
+  const msLeft = exp ? exp.getTime() - Date.now() : Infinity;
+  const daysLeft = isFinite(msLeft) ? Math.max(0, Math.ceil(msLeft/86400000)) : null;
+  if(!subscriptionActive()){
+    return { key:'expired', label:'Expired' + (exp ? ' on '+fmtShortDate(exp) : ''),
+             daysLeft:0, plan, cancelled:!!s.cancelled, cycle:s.cycle, expiresAt:s.expiresAt };
+  }
+  return { key: s.cancelled ? 'ending' : 'active',
+           label: (s.cancelled ? 'Cancels' : 'Renews') + (exp ? ' on '+fmtShortDate(exp) : ' automatically'),
+           daysLeft, plan, cancelled:!!s.cancelled, cycle:s.cycle, expiresAt:s.expiresAt };
+}
+
+function fmtShortDate(d){
+  return d.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+}
+
+function subscribe(planId, cycle){
+  const plan = PLANS.find(p=>p.id===planId);
+  if(!plan) return;
+  const now = new Date();
+  const next = cycle === 'monthly' && state.subscription.planId === planId && state.subscription.expiresAt && subscriptionActive()
+    ? new Date(state.subscription.expiresAt)
+    : now;
+  state.subscription = {
+    planId, cycle: cycle || 'yearly',
+    subscribedAt: now.toISOString(),
+    expiresAt: new Date(next.getTime() + SUB_CYCLE_MS[cycle || 'yearly']).toISOString(),
+    cancelled: false
+  };
+  saveState();
+}
+
+function renewSubscription(){
+  const s = state.subscription;
+  if(!s.planId) return;
+  const cycle = s.cycle || 'yearly';
+  const base = (s.expiresAt && new Date(s.expiresAt).getTime() > Date.now())
+    ? new Date(s.expiresAt) : new Date();
+  s.cancelled = false;
+  s.expiresAt = new Date(base.getTime() + SUB_CYCLE_MS[cycle]).toISOString();
+  saveState();
+}
+
+function cancelSubscription(){
+  const s = state.subscription;
+  if(!s.planId) return;
+  s.cancelled = true; // keeps access until the current period ends, no auto-renewal
+  saveState();
+}
+
+function reactivateSubscription(){
+  const s = state.subscription;
+  if(!s.planId) return;
+  if(subscriptionActive()){ s.cancelled = false; saveState(); }
+  else renewSubscription();
+}
+
+function unlockedTools(){
+  const s = state.subscription;
+  if(!s || !s.planId || !subscriptionActive()) return new Set();
+  const plan = PLANS.find(p=>p.id===s.planId);
+  return new Set(plan ? plan.tools : []);
+}
+function hasAccess(toolId){
+  return unlockedTools().has(toolId);
+}
+function plansThatInclude(toolId){
+  return PLANS.filter(p=>p.tools.includes(toolId));
+}
+
+function dashboardTotals(){
+  const income = num(state.budgeting.income);
+  const totalExpenses = state.expenses.reduce((s,e)=>s+num(e.amount),0);
+  const balance = income - totalExpenses;
+  const currentSavings = num(state.savingsPlanner.current);
+  const goal = num(state.savingsPlanner.goal);
+  const progress = goal>0 ? Math.min(100,(currentSavings/goal)*100) : 0;
+  return {income, totalExpenses, balance, currentSavings, goal, progress};
+}
+
+/* ============================= ROUTER ============================= */
+
+function currentPage(){
+  const h = (location.hash||'').replace('#','');
+  return h || 'dashboard';
+}
+
+function navigate(page){
+  location.hash = page;
+}
+
+window.addEventListener('hashchange', ()=>{ if(!currentUser) return; renderApp(); });
+
+async function boot(){
+  document.getElementById('app').innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100vh;width:100vw;color:#5B6B85;font-family:Inter;">Loading FINWISE…</div>`;
+  await loadUsers();
+  await loadSession();
+  if(currentUser){
+    await loadState();
+    renderApp();
+  } else {
+    renderAuthScreen('login');
+  }
+}
+
+function renderApp(){
+  if(!currentUser) return renderAuthScreen('login');
+  const page = currentPage();
+  const shellHtml = renderShell(page);
+  document.getElementById('app').innerHTML = shellHtml;
+  bindShellEvents();
+  mountPage(page);
+}
+
+/* ============================= SHELL ============================= */
+
+function navItemHtml(item, activePage){
+  const locked = TOOLS_META[item.id] && !hasAccess(item.id);
+  return `<button class="nav-item ${activePage===item.id?'active':''}" data-nav="${item.id}">
+    <span class="nav-icon">${item.icon}</span><span>${item.label}</span>
+    ${locked?'<span class="lock-ico">🔒</span>':''}
+  </button>`;
+}
+
+function renderShell(activePage){
+  const st = subscriptionStatus();
+  const planId = state.subscription.planId;
+  const plan = PLANS.find(p=>p.id===planId);
+  const navHtml = NAV_STRUCTURE.map(group=>`
+    <div class="nav-group">
+      <div class="nav-label">${group.label}</div>
+      ${group.items.map(it=>navItemHtml(it, activePage)).join('')}
+    </div>
+  `).join('');
+
+  const pageTitles = {
+    dashboard:['Dashboard','Your financial snapshot, updated automatically'],
+    budgeting:['Budgeting Tool','Plan where every peso goes this month'],
+    expenses:['Expense Tracker','Log and categorize your spending'],
+    savings:['Savings Planner','Track progress toward your savings goal'],
+    goals:['Financial Goals Planner','Set and monitor specific money goals'],
+    education:['Financial Education Hub','Practical lessons in plain language'],
+    'business-guide':['Business Start-Up Guide','Nine steps from idea to launch'],
+    'business-budget':['Business Budget Planner','Compare expected revenue and operating costs'],
+    'startup-cost':['Start-Up Cost Calculator','Estimate the capital you need to launch'],
+    pnl:['Profit &amp; Loss Calculator','Find your net result for the period'],
+    breakeven:['Break-Even Calculator','Know how many units you must sell'],
+    templates:['Business Planning Templates','Editable starting points for your plan'],
+    reports:['Financial Reports','A full summary of your recorded data'],
+    subscription:['Subscription Plans','Choose the FINWISE plan that fits you'],
+    support:['Financial Consultation','Send a message to the FINWISE team'],
+  };
+  const [title, sub] = pageTitles[activePage] || pageTitles.dashboard;
+
+  const bottomItems = [
+    {id:'dashboard', label:'Home', icon:'🏠'},
+    {id:'expenses', label:'Expenses', icon:'🧾'},
+    {id:'savings', label:'Savings', icon:'💰'},
+    {id:'reports', label:'Reports', icon:'📋'},
+  ];
+
+  return `
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <div class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-name">FINWISE<span class="brand-dot">.</span></div>
+      <div class="brand-tag">"Think Finance. Think FINWISE."</div>
+    </div>
+    ${navHtml}
+    <div class="profile-block">
+      <div class="profile-avatar">${currentUser.guest ? 'G' : (currentUser.name||'?').trim().charAt(0).toUpperCase()}</div>
+      <div class="profile-info">
+        <div class="profile-name">${currentUser.guest ? 'Guest Session' : esc(currentUser.name)}</div>
+        <div class="profile-email">${currentUser.guest ? 'Data saved on this device' : esc(currentUser.email)}</div>
+      </div>
+      <button class="logout-btn" id="logout-btn" title="Log out">⏻</button>
+    </div>
+    <div class="plan-pill">
+      <b>${st.key==='none' ? 'No active plan' : esc(st.plan.name) + (st.key==='expired' ? ' (expired)' : '')}</b>
+      ${st.key==='none' ? 'Subscribe to unlock more tools'
+        : st.key==='expired' ? 'Renew to unlock your tools again'
+        : esc(st.label) + ' · ' + (st.cycle==='monthly' ? 'monthly billing' : 'yearly billing')}
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="hamburger" id="hamburger">☰</button>
+        <div>
+          <h1>${title}</h1>
+          <div class="sub">${sub}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span id="save-indicator" style="font-size:11px;color:var(--gray)">All changes save automatically</span>
+        <button class="btn secondary small install-btn" id="install-btn">⬇ Install App</button>
+        <button class="btn secondary small" data-nav="subscription">⭐ ${plan?plan.name:'Get a Plan'}</button>
+      </div>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+  <div class="bottom-nav" id="bottomNav">
+    ${bottomItems.map(it=>`<button class="bottom-nav-item ${activePage===it.id?'active':''}" data-nav="${it.id}"><span class="bn-icon">${it.icon}</span>${it.label}</button>`).join('')}
+    <button class="bottom-nav-item" id="bottomMore"><span class="bn-icon">☰</span>More</button>
+  </div>`;
+}
+
+function bindShellEvents(){
+  document.querySelectorAll('[data-nav]').forEach(el=>{
+    el.addEventListener('click', ()=>{ navigate(el.getAttribute('data-nav')); closeSidebar(); });
+  });
+  const ham = document.getElementById('hamburger');
+  if(ham) ham.addEventListener('click', ()=> toggleSidebar());
+  const more = document.getElementById('bottomMore');
+  if(more) more.addEventListener('click', ()=> toggleSidebar());
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if(backdrop) backdrop.addEventListener('click', ()=> closeSidebar());
+  const installBtn = document.getElementById('install-btn');
+  if(installBtn) bindInstallButton(installBtn);
+  const logoutBtn = document.getElementById('logout-btn');
+  if(logoutBtn) logoutBtn.addEventListener('click', logOut);
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarBackdrop').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarBackdrop').classList.remove('open');
+}
+
+function lockedCardHtml(toolId){
+  const meta = TOOLS_META[toolId];
+  const plans = plansThatInclude(toolId);
+  return `<div class="locked-card">
+    <div class="lk">🔒</div>
+    <h3>${meta.label} is part of a FINWISE plan</h3>
+    <p>Subscribe to a plan that includes this tool to start using it. Your other FINWISE data stays saved either way.</p>
+    <div style="margin-bottom:18px">${plans.map(p=>`<span class="plan-chip">${p.name} · ${peso(p.price)}/yr</span>`).join('')}</div>
+    <button class="btn" data-nav="subscription">View Subscription Plans</button>
+  </div>`;
+}
+
+/* ============================= PAGE MOUNTING ============================= */
+
+function mountPage(page){
+  const c = document.getElementById('content');
+  const guardedPages = Object.keys(TOOLS_META);
+  if(guardedPages.includes(page) && !hasAccess(page)){
+    c.innerHTML = lockedCardHtml(page);
+    c.querySelectorAll('[data-nav]').forEach(el=> el.addEventListener('click', ()=>navigate(el.getAttribute('data-nav'))));
+    return;
+  }
+  const renderers = {
+    dashboard: renderDashboard,
+    budgeting: renderBudgeting,
+    expenses: renderExpenses,
+    savings: renderSavings,
+    goals: renderGoals,
+    education: renderEducation,
+    'business-guide': renderBusinessGuide,
+    'business-budget': renderBusinessBudget,
+    'startup-cost': renderStartupCost,
+    pnl: renderPnl,
+    breakeven: renderBreakeven,
+    templates: renderTemplates,
+    reports: renderReports,
+    subscription: renderSubscription,
+    support: renderSupport,
+  };
+  (renderers[page] || renderDashboard)();
+}
+
+/* ============================= DASHBOARD ============================= */
+
+function renderDashboard(){
+  const c = document.getElementById('content');
+  const t = dashboardTotals();
+  const quick = [
+    {id:'budgeting', icon:'🧮', label:'Budgeting Tool'},
+    {id:'expenses', icon:'🧾', label:'Expense Tracker'},
+    {id:'savings', icon:'💰', label:'Savings Planner'},
+    {id:'startup-cost', icon:'🧱', label:'Start-Up Cost Calc.'},
+    {id:'pnl', icon:'💹', label:'Profit &amp; Loss Calc.'},
+    {id:'breakeven', icon:'⚖️', label:'Break-Even Calc.'},
+    {id:'reports', icon:'📋', label:'Financial Reports'},
+    {id:'education', icon:'📚', label:'Education Hub'},
+  ];
+  c.innerHTML = `
+    <div class="grid grid-4">
+      <div class="card stat-card accent-blue"><div class="label">Total Income</div><div class="value">${peso(t.income)}</div><div class="foot">From your Budgeting Tool</div></div>
+      <div class="card stat-card accent-red"><div class="label">Total Expenses</div><div class="value">${peso(t.totalExpenses)}</div><div class="foot">${state.expenses.length} recorded ${state.expenses.length===1?'entry':'entries'}</div></div>
+      <div class="card stat-card ${t.balance>=0?'accent-green':'accent-red'}"><div class="label">Current Balance</div><div class="value">${peso(t.balance)}</div><div class="foot">Income minus expenses</div></div>
+      <div class="card stat-card accent-navy"><div class="label">Current Savings</div><div class="value">${peso(t.currentSavings)}</div><div class="foot">Goal: ${peso(t.goal)}</div></div>
+    </div>
+
+    <div class="section-title"><h2>Savings Goal Progress</h2></div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--gray);margin-bottom:8px">
+        <span>${peso(t.currentSavings)} saved of ${peso(t.goal)}</span><span class="mono" style="font-weight:700;color:var(--navy)">${t.progress.toFixed(1)}%</span>
+      </div>
+      <div class="progress-wrap"><div class="progress-fill green" style="width:${t.progress}%"></div></div>
+    </div>
+
+    <div class="section-title"><h2>Quick Access</h2></div>
+    <div class="grid grid-4">
+      ${quick.map(q=>`<button class="quick-btn" data-nav="${q.id}">${q.icon} ${q.label} ${!hasAccess(q.id)?'🔒':''}</button>`).join('')}
+    </div>
+
+    ${footerDisclaimer()}
+  `;
+  c.querySelectorAll('[data-nav]').forEach(el=> el.addEventListener('click', ()=>navigate(el.getAttribute('data-nav'))));
+}
+
+function footerDisclaimer(){
+  return `<div class="footer-disclaimer"><b>Disclaimer:</b> FINWISE Financial Hub Co. provides financial education and planning tools for informational purposes. The application does not replace professional financial, legal, tax, investment, or accounting advice.</div>`;
+}
+
+/* ============================= BUDGETING TOOL ============================= */
+
+function renderBudgeting(){
+  const c = document.getElementById('content');
+  const b = state.budgeting;
+  c.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:14px">Enter Your Numbers</h3>
+        <div class="field"><label>Monthly Income</label><input type="number" id="bg-income" min="0" placeholder="e.g. 25000" value="${esc(b.income)}"></div>
+        <div class="field"><label>Planned Savings</label><input type="number" id="bg-savings" min="0" placeholder="e.g. 3000" value="${esc(b.savings)}"></div>
+        <div class="field"><label>Spending Limit</label><input type="number" id="bg-limit" min="0" placeholder="e.g. 18000" value="${esc(b.spendingLimit)}"></div>
+        <div id="bg-error"></div>
+        <button class="btn" id="bg-calc">Calculate Budget</button>
+      </div>
+      <div>
+        <div class="card" id="bg-result">
+          <h3 style="margin-bottom:10px">Result</h3>
+          <p style="color:var(--gray);font-size:13.5px">Enter your numbers and press Calculate to see your available and remaining budget in Philippine Peso.</p>
+        </div>
+      </div>
+    </div>
+  `;
+  bindAutosave([
+    ['bg-income', v=> state.budgeting.income = v],
+    ['bg-savings', v=> state.budgeting.savings = v],
+    ['bg-limit', v=> state.budgeting.spendingLimit = v],
+  ]);
+  document.getElementById('bg-calc').addEventListener('click', ()=>{
+    const income = num(val('bg-income')), savings = num(val('bg-savings')), limit = num(val('bg-limit'));
+    const errBox = document.getElementById('bg-error');
+    if(val('bg-income')==='' || income<=0){ errBox.innerHTML = `<div class="error-msg">Please enter a valid monthly income greater than 0.</div>`; return; }
+    errBox.innerHTML = '';
+    const available = income - savings;
+    const remaining = available - limit;
+    state.budgeting = { income: val('bg-income'), savings: val('bg-savings'), spendingLimit: val('bg-limit') };
+    saveState();
+    document.getElementById('bg-result').innerHTML = `
+      <h3 style="margin-bottom:10px">Result</h3>
+      <div class="result-box ${remaining<0?'loss':'profit'}">
+        <div class="result-line"><span>Available Budget (Income − Savings)</span><b>${peso(available)}</b></div>
+        <div class="result-line"><span>Remaining Budget (Available − Spending Limit)</span><b>${peso(remaining)}</b></div>
+        <div class="big ${remaining<0?'loss':'profit'}" style="margin-top:8px">${peso(remaining)} remaining</div>
+        ${remaining<0?'<div class="help" style="color:var(--red);margin-top:6px">Your spending limit exceeds your available budget. Consider lowering planned expenses.</div>':''}
+      </div>`;
+    toast('Budget calculated and saved.', 'success');
+    renderDashboardSilently();
+  });
+}
+
+function renderDashboardSilently(){ /* no-op hook reserved for cross-page refresh */ }
+
+/* ============================= EXPENSE TRACKER ============================= */
+
+function renderExpenses(){
+  const c = document.getElementById('content');
+  const total = state.expenses.reduce((s,e)=>s+num(e.amount),0);
+  const rows = state.expenses.length ? state.expenses.map(e=>`
+    <tr>
+      <td>${esc(e.desc)}</td>
+      <td><span class="tag">${esc(e.category)}</span></td>
+      <td class="mono">${peso(e.amount)}</td>
+      <td><button class="btn ghost small" data-del="${e.id}">Delete</button></td>
+    </tr>`).join('') : `<tr><td colspan="4" class="empty-row">No expenses recorded yet. Add your first one above.</td></tr>`;
+
+  c.innerHTML = `
+    <div class="card">
+      <h3 style="margin-bottom:14px">Add an Expense</h3>
+      <div class="grid grid-3">
+        <div class="field"><label>Description</label><input type="text" id="ex-desc" placeholder="e.g. Jeepney fare"></div>
+        <div class="field"><label>Category</label><select id="ex-cat">${EXPENSE_CATEGORIES.map(cat=>`<option value="${cat}">${cat}</option>`).join('')}</select></div>
+        <div class="field"><label>Amount</label><input type="number" id="ex-amt" min="0" placeholder="e.g. 50"></div>
+      </div>
+      <div id="ex-error"></div>
+      <button class="btn" id="ex-add">Add Expense</button>
+    </div>
+
+    <div class="section-title"><h2>Recorded Expenses</h2><span class="mono" style="font-weight:700;color:var(--navy)">Total: ${peso(total)}</span></div>
+    <div class="card">
+      <table><thead><tr><th>Description</th><th>Category</th><th>Amount</th><th></th></tr></thead><tbody>${rows}</tbody></table>
+    </div>
+  `;
+  document.getElementById('ex-add').addEventListener('click', ()=>{
+    const desc = val('ex-desc').trim(), cat = val('ex-cat'), amt = num(val('ex-amt'));
+    const err = document.getElementById('ex-error');
+    if(!desc || amt<=0){ err.innerHTML = `<div class="error-msg">Enter a description and an amount greater than 0.</div>`; return; }
+    err.innerHTML = '';
+    state.expenses.unshift({id:uid(), desc, category:cat, amount:amt, date:new Date().toISOString()});
+    saveState();
+    toast('Expense added.', 'success');
+    renderExpenses();
+  });
+  c.querySelectorAll('[data-del]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.expenses = state.expenses.filter(e=>e.id!==btn.getAttribute('data-del'));
+      saveState();
+      toast('Expense deleted.');
+      renderExpenses();
+    });
+  });
+}
+
+/* ============================= SAVINGS PLANNER ============================= */
+
+function renderSavings(){
+  const c = document.getElementById('content');
+  const s = state.savingsPlanner;
+  c.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:14px">Your Savings Plan</h3>
+        <div class="field"><label>Savings Goal</label><input type="number" id="sv-goal" min="0" placeholder="e.g. 100000" value="${esc(s.goal)}"></div>
+        <div class="field"><label>Current Savings</label><input type="number" id="sv-current" min="0" placeholder="e.g. 15000" value="${esc(s.current)}"></div>
+        <div class="field"><label>Monthly Contribution</label><input type="number" id="sv-monthly" min="0" placeholder="e.g. 2500" value="${esc(s.monthly)}"></div>
+        <div id="sv-error"></div>
+        <button class="btn" id="sv-calc">Calculate Progress</button>
+      </div>
+      <div class="card" id="sv-result">
+        <h3 style="margin-bottom:10px">Progress</h3>
+        <p style="color:var(--gray);font-size:13.5px">Enter your goal, current savings, and monthly contribution to see your progress bar and estimated timeline.</p>
+      </div>
+    </div>
+  `;
+  bindAutosave([
+    ['sv-goal', v=> state.savingsPlanner.goal = v],
+    ['sv-current', v=> state.savingsPlanner.current = v],
+    ['sv-monthly', v=> state.savingsPlanner.monthly = v],
+  ]);
+  document.getElementById('sv-calc').addEventListener('click', ()=>{
+    const goal = num(val('sv-goal')), current = num(val('sv-current')), monthly = num(val('sv-monthly'));
+    const err = document.getElementById('sv-error');
+    if(goal<=0){ err.innerHTML = `<div class="error-msg">Enter a savings goal greater than 0.</div>`; return; }
+    err.innerHTML = '';
+    state.savingsPlanner = { goal: val('sv-goal'), current: val('sv-current'), monthly: val('sv-monthly') };
+    saveState();
+    const pct = Math.min(100, (current/goal)*100);
+    const remaining = Math.max(0, goal-current);
+    const months = monthly>0 ? Math.ceil(remaining/monthly) : null;
+    document.getElementById('sv-result').innerHTML = `
+      <h3 style="margin-bottom:10px">Progress</h3>
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--gray);margin-bottom:8px">
+        <span>${peso(current)} of ${peso(goal)}</span><span class="mono" style="font-weight:700;color:var(--navy)">${pct.toFixed(1)}%</span>
+      </div>
+      <div class="progress-wrap"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="result-line" style="margin-top:14px"><span>Amount Remaining</span><b>${peso(remaining)}</b></div>
+      <div class="result-line"><span>Estimated Time to Goal</span><b>${months===null ? 'Add a monthly contribution to estimate' : months+' month(s)'}</b></div>
+    `;
+    toast('Savings progress updated.', 'success');
+  });
+}
+
+/* ============================= FINANCIAL GOALS PLANNER ============================= */
+
+function renderGoals(){
+  const c = document.getElementById('content');
+  const rows = state.goals.length ? state.goals.map(g=>{
+    const pct = num(g.target)>0 ? Math.min(100, (num(g.current)/num(g.target))*100) : 0;
+    const remaining = Math.max(0, num(g.target)-num(g.current));
+    const status = pct>=100 ? 'Achieved' : (g.date && new Date(g.date) < new Date() ? 'Past due' : 'In progress');
+    const statusColor = pct>=100 ? 'var(--green)' : (status==='Past due' ? 'var(--red)' : 'var(--blue)');
+    return `<div class="card" style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><b>${esc(g.name)}</b><div class="help">Target date: ${g.date?esc(g.date):'Not set'}</div></div>
+        <div style="text-align:right">
+          <span style="font-size:11.5px;font-weight:700;color:${statusColor}">${status}</span><br>
+          <button class="btn ghost small" data-delgoal="${g.id}">Delete</button>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--gray);margin:10px 0 6px">
+        <span>${peso(g.current)} of ${peso(g.target)}</span><span class="mono" style="font-weight:700;color:var(--navy)">${pct.toFixed(1)}%</span>
+      </div>
+      <div class="progress-wrap"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="help" style="margin-top:8px">Remaining: ${peso(remaining)}</div>
+    </div>`;
+  }).join('') : `<div class="locked-card"><div class="lk">🎯</div><h3>No goals yet</h3><p>Add your first financial goal using the form above.</p></div>`;
+
+  c.innerHTML = `
+    <div class="card">
+      <h3 style="margin-bottom:14px">New Financial Goal</h3>
+      <div class="grid grid-4">
+        <div class="field"><label>Goal Name</label><input type="text" id="gl-name" placeholder="e.g. Laptop Fund"></div>
+        <div class="field"><label>Target Amount</label><input type="number" id="gl-target" min="0" placeholder="e.g. 40000"></div>
+        <div class="field"><label>Current Amount</label><input type="number" id="gl-current" min="0" placeholder="e.g. 5000"></div>
+        <div class="field"><label>Target Date</label><input type="date" id="gl-date"></div>
+      </div>
+      <div id="gl-error"></div>
+      <button class="btn" id="gl-add">Add Goal</button>
+    </div>
+    <div class="section-title"><h2>Your Goals</h2></div>
+    ${rows}
+  `;
+  document.getElementById('gl-add').addEventListener('click', ()=>{
+    const name = val('gl-name').trim(), target = num(val('gl-target')), current = num(val('gl-current')), date = val('gl-date');
+    const err = document.getElementById('gl-error');
+    if(!name || target<=0){ err.innerHTML = `<div class="error-msg">Enter a goal name and a target amount greater than 0.</div>`; return; }
+    err.innerHTML = '';
+    state.goals.unshift({id:uid(), name, target, current, date});
+    saveState();
+    toast('Goal added.', 'success');
+    renderGoals();
+  });
+  c.querySelectorAll('[data-delgoal]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.goals = state.goals.filter(g=>g.id!==btn.getAttribute('data-delgoal'));
+      saveState();
+      toast('Goal deleted.');
+      renderGoals();
+    });
+  });
+}
+
+/* ============================= EDUCATION HUB ============================= */
+
+function renderEducation(){
+  const c = document.getElementById('content');
+  c.innerHTML = `<div class="grid grid-3">
+    ${LESSONS.map(l=>`
+      <div class="card lesson-card" data-lesson="${l.id}">
+        <div class="lesson-icon">${l.icon}</div>
+        <h3 style="margin-top:8px;font-size:15px">${l.title}</h3>
+        <p style="color:var(--gray);font-size:12.5px;margin-top:4px">${l.summary}</p>
+        <div class="lesson-body" id="body-${l.id}">${l.body}</div>
+      </div>
+    `).join('')}
+  </div>`;
+  c.querySelectorAll('[data-lesson]').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const id = card.getAttribute('data-lesson');
+      document.getElementById('body-'+id).classList.toggle('open');
+    });
+  });
+}
+
+/* ============================= BUSINESS START-UP GUIDE ============================= */
+
+function renderBusinessGuide(){
+  const c = document.getElementById('content');
+  const done = state.businessSteps.filter(Boolean).length;
+  const pct = (done/BUSINESS_STEPS.length)*100;
+  c.innerHTML = `
+    <div class="card" style="margin-bottom:18px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--gray);margin-bottom:8px">
+        <span>${done} of ${BUSINESS_STEPS.length} steps completed</span><span class="mono" style="font-weight:700;color:var(--navy)">${pct.toFixed(0)}%</span>
+      </div>
+      <div class="progress-wrap"><div class="progress-fill green" style="width:${pct}%"></div></div>
+    </div>
+    <div class="card">
+      ${BUSINESS_STEPS.map((s,i)=>`
+        <div class="step-row">
+          <div class="step-check ${state.businessSteps[i]?'done':''}" data-step="${i}">${state.businessSteps[i]?'✓':''}</div>
+          <div>
+            <div class="step-title ${state.businessSteps[i]?'done':''}">${i+1}. ${s.t}</div>
+            <div class="step-desc">${s.d}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  c.querySelectorAll('[data-step]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const i = Number(el.getAttribute('data-step'));
+      state.businessSteps[i] = !state.businessSteps[i];
+      saveState();
+      renderBusinessGuide();
+    });
+  });
+}
+
+/* ============================= BUSINESS BUDGET PLANNER ============================= */
+
+function renderBusinessBudget(){
+  const c = document.getElementById('content');
+  const b = state.businessBudget;
+  c.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:14px">Business Numbers</h3>
+        <div class="field"><label>Expected Revenue</label><input type="number" id="bb-rev" min="0" value="${esc(b.revenue)}" placeholder="e.g. 80000"></div>
+        <div class="field"><label>Operating Expenses</label><input type="number" id="bb-exp" min="0" value="${esc(b.expenses)}" placeholder="e.g. 55000"></div>
+        <div id="bb-error"></div>
+        <button class="btn" id="bb-calc">Calculate Net Income</button>
+      </div>
+      <div class="card" id="bb-result">
+        <h3 style="margin-bottom:10px">Result</h3>
+        <p style="color:var(--gray);font-size:13.5px">Enter your figures to see your projected net income.</p>
+      </div>
+    </div>
+  `;
+  bindAutosave([
+    ['bb-rev', v=> state.businessBudget.revenue = v],
+    ['bb-exp', v=> state.businessBudget.expenses = v],
+  ]);
+  document.getElementById('bb-calc').addEventListener('click', ()=>{
+    const rev = num(val('bb-rev')), exp = num(val('bb-exp'));
+    const err = document.getElementById('bb-error');
+    if(val('bb-rev')===''){ err.innerHTML = `<div class="error-msg">Enter your expected revenue.</div>`; return; }
+    err.innerHTML = '';
+    state.businessBudget = { revenue: val('bb-rev'), expenses: val('bb-exp') };
+    saveState();
+    const net = rev - exp;
+    document.getElementById('bb-result').innerHTML = `
+      <h3 style="margin-bottom:10px">Result</h3>
+      <div class="result-box ${net>=0?'profit':'loss'}">
+        <div class="result-line"><span>Expected Revenue</span><b>${peso(rev)}</b></div>
+        <div class="result-line"><span>Operating Expenses</span><b>${peso(exp)}</b></div>
+        <div class="big ${net>=0?'profit':'loss'}">${peso(net)}</div>
+        <div style="font-weight:700;color:${net>=0?'var(--green)':'var(--red)'};margin-top:4px">Projected ${net>=0?'PROFIT':'LOSS'}</div>
+      </div>`;
+    toast('Business budget calculated.', 'success');
+  });
+}
+
+/* ============================= START-UP COST CALCULATOR ============================= */
+
+const STARTUP_FIELDS = [
+  ['equipment','Equipment and Machinery'],
+  ['furniture','Furniture and Fixtures'],
+  ['leasehold','Building or Leasehold Improvements'],
+  ['registration','Business Registration and Permits'],
+  ['supplies','Initial Supplies'],
+  ['marketing','Marketing'],
+  ['other','Other Start-Up Expenses'],
+];
+
+function renderStartupCost(){
+  const c = document.getElementById('content');
+  const s = state.startupCosts;
+  c.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:14px">Start-Up Cost Items</h3>
+        ${STARTUP_FIELDS.map(([key,label])=>`<div class="field"><label>${label}</label><input type="number" id="sc-${key}" min="0" value="${esc(s[key])}" placeholder="0"></div>`).join('')}
+        <div id="sc-error"></div>
+        <button class="btn" id="sc-calc">Calculate Total</button>
+      </div>
+      <div class="card" id="sc-result">
+        <h3 style="margin-bottom:10px">Total Start-Up Capital Required</h3>
+        <p style="color:var(--gray);font-size:13.5px">Fill in each cost item and press Calculate to see your total required capital.</p>
+      </div>
+    </div>
+  `;
+  bindAutosave(STARTUP_FIELDS.map(([key])=> ['sc-'+key, v=> state.startupCosts[key] = v]));
+  document.getElementById('sc-calc').addEventListener('click', ()=>{
+    let total = 0;
+    const newCosts = {};
+    STARTUP_FIELDS.forEach(([key])=>{ const v = num(val('sc-'+key)); newCosts[key] = val('sc-'+key); total += v; });
+    state.startupCosts = newCosts;
+    saveState();
+    document.getElementById('sc-result').innerHTML = `
+      <h3 style="margin-bottom:10px">Total Start-Up Capital Required</h3>
+      <div class="result-box">
+        ${STARTUP_FIELDS.map(([key,label])=>`<div class="result-line"><span>${label}</span><b>${peso(newCosts[key])}</b></div>`).join('')}
+        <div class="big" style="margin-top:10px">${peso(total)}</div>
+      </div>`;
+    toast('Start-up costs calculated.', 'success');
+  });
+}
+
+/* ============================= PROFIT & LOSS CALCULATOR ============================= */
+
+function renderPnl(){
+  const c = document.getElementById('content');
+  const p = state.pnl;
+  c.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:14px">Enter Your Figures</h3>
+        <div class="field"><label>Total Revenue</label><input type="number" id="pl-rev" min="0" value="${esc(p.revenue)}" placeholder="e.g. 120000"></div>
+        <div class="field"><label>Cost of Service</label><input type="number" id="pl-cost" min="0" value="${esc(p.cost)}" placeholder="e.g. 45000"></div>
+        <div class="field"><label>Operating Expenses</label><input type="number" id="pl-opex" min="0" value="${esc(p.opex)}" placeholder="e.g. 30000"></div>
+        <div id="pl-error"></div>
+        <button class="btn" id="pl-calc">Calculate Net Result</button>
+      </div>
+      <div class="card" id="pl-result">
+        <h3 style="margin-bottom:10px">Result</h3>
+        <p style="color:var(--gray);font-size:13.5px">Enter your figures to calculate your net profit or loss.</p>
+      </div>
+    </div>
+  `;
+  bindAutosave([
+    ['pl-rev', v=> state.pnl.revenue = v],
+    ['pl-cost', v=> state.pnl.cost = v],
+    ['pl-opex', v=> state.pnl.opex = v],
+  ]);
+  document.getElementById('pl-calc').addEventListener('click', ()=>{
+    const rev = num(val('pl-rev')), cost = num(val('pl-cost')), opex = num(val('pl-opex'));
+    const err = document.getElementById('pl-error');
+    if(val('pl-rev')===''){ err.innerHTML = `<div class="error-msg">Enter your total revenue.</div>`; return; }
+    err.innerHTML = '';
+    state.pnl = { revenue: val('pl-rev'), cost: val('pl-cost'), opex: val('pl-opex') };
+    saveState();
+    const totalCost = cost + opex;
+    const net = rev - totalCost;
+    document.getElementById('pl-result').innerHTML = `
+      <h3 style="margin-bottom:10px">Result</h3>
+      <div class="result-box ${net>=0?'profit':'loss'}">
+        <div class="result-line"><span>Total Revenue</span><b>${peso(rev)}</b></div>
+        <div class="result-line"><span>Total Cost (Cost of Service + Operating Expenses)</span><b>${peso(totalCost)}</b></div>
+        <div class="big ${net>=0?'profit':'loss'}">${peso(net)}</div>
+        <div style="font-weight:700;color:${net>=0?'var(--green)':'var(--red)'};margin-top:4px">${net>=0?'PROFIT':'LOSS'}</div>
+      </div>`;
+    toast('Profit and loss calculated.', 'success');
+  });
+}
+
+/* ============================= BREAK-EVEN CALCULATOR ============================= */
+
+function renderBreakeven(){
+  const c = document.getElementById('content');
+  const b = state.breakEven;
+  c.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:14px">Enter Your Figures</h3>
+        <div class="field"><label>Fixed Costs</label><input type="number" id="be-fixed" min="0" value="${esc(b.fixed)}" placeholder="e.g. 50000"></div>
+        <div class="field"><label>Selling Price per Unit</label><input type="number" id="be-price" min="0" value="${esc(b.price)}" placeholder="e.g. 250"></div>
+        <div class="field"><label>Variable Cost per Unit</label><input type="number" id="be-var" min="0" value="${esc(b.variable)}" placeholder="e.g. 120"></div>
+        <div id="be-error"></div>
+        <button class="btn" id="be-calc">Calculate Break-Even</button>
+      </div>
+      <div class="card" id="be-result">
+        <h3 style="margin-bottom:10px">Result</h3>
+        <p style="color:var(--gray);font-size:13.5px">Enter your figures to find the number of units you must sell to break even.</p>
+      </div>
+    </div>
+  `;
+  bindAutosave([
+    ['be-fixed', v=> state.breakEven.fixed = v],
+    ['be-price', v=> state.breakEven.price = v],
+    ['be-var', v=> state.breakEven.variable = v],
+  ]);
+  document.getElementById('be-calc').addEventListener('click', ()=>{
+    const fixed = num(val('be-fixed')), price = num(val('be-price')), variable = num(val('be-var'));
+    const err = document.getElementById('be-error');
+    if(price <= variable){ err.innerHTML = `<div class="error-msg">Selling price per unit must be greater than variable cost per unit.</div>`; return; }
+    err.innerHTML = '';
+    state.breakEven = { fixed: val('be-fixed'), price: val('be-price'), variable: val('be-var') };
+    saveState();
+    const contribution = price - variable;
+    const units = fixed / contribution;
+    document.getElementById('be-result').innerHTML = `
+      <h3 style="margin-bottom:10px">Result</h3>
+      <div class="result-box">
+        <div class="result-line"><span>Contribution Margin per Unit</span><b>${peso(contribution)}</b></div>
+        <div class="big">${Math.ceil(units).toLocaleString('en-PH')} units</div>
+        <div class="help" style="margin-top:6px">You need to sell approximately ${Math.ceil(units).toLocaleString('en-PH')} units to cover your fixed costs.</div>
+      </div>`;
+    toast('Break-even point calculated.', 'success');
+  });
+}
+
+/* ============================= BUSINESS PLANNING TEMPLATES ============================= */
+
+function renderTemplates(){
+  const c = document.getElementById('content');
+  c.innerHTML = TEMPLATE_DEFS.map(t=>{
+    const data = state.templates[t.id] || {};
+    return `<div class="card" style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3>${t.title}</h3>
+        <div style="display:flex;gap:8px">
+          <button class="btn secondary small" data-copy="${t.id}">Copy as Text</button>
+          <button class="btn secondary small" data-save="${t.id}">Save</button>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        ${t.fields.map((f,i)=>`<div class="field"><label>${f}</label><textarea id="tpl-${t.id}-${i}" rows="2">${esc(data[f]||'')}</textarea></div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  const autosaveFields = [];
+  TEMPLATE_DEFS.forEach(t=>{
+    t.fields.forEach((f,i)=>{
+      autosaveFields.push([`tpl-${t.id}-${i}`, v=>{
+        if(!state.templates[t.id]) state.templates[t.id] = {};
+        state.templates[t.id][f] = v;
+      }]);
+    });
+  });
+  bindAutosave(autosaveFields);
+
+  TEMPLATE_DEFS.forEach(t=>{
+    document.querySelector(`[data-save="${t.id}"]`).addEventListener('click', ()=>{
+      const data = {};
+      t.fields.forEach((f,i)=>{ data[f] = val(`tpl-${t.id}-${i}`); });
+      state.templates[t.id] = data;
+      saveState();
+      toast(t.title + ' saved.', 'success');
+    });
+    document.querySelector(`[data-copy="${t.id}"]`).addEventListener('click', async ()=>{
+      const lines = t.fields.map((f,i)=> f + ': ' + (val(`tpl-${t.id}-${i}`)||'—'));
+      const text = t.title + '\n' + lines.join('\n');
+      try{
+        await navigator.clipboard.writeText(text);
+        toast('Template copied to clipboard.', 'success');
+      }catch(e){
+        toast('Could not copy automatically — please select and copy the text manually.', 'error');
+      }
+    });
+  });
+}
+
+/* ============================= FINANCIAL REPORTS ============================= */
+
+function renderReports(){
+  const c = document.getElementById('content');
+  const now = new Date().toLocaleString('en-PH');
+  const help = `<div class="help" style="margin-top:6px">Generated ${esc(now)}</div>`;
+  buildReport();
+
+  function buildReport(){
+    const t = dashboardTotals();
+    const rev = num(state.businessBudget.revenue) || num(state.pnl.revenue);
+    const bizExp = num(state.businessBudget.expenses) || (num(state.pnl.cost)+num(state.pnl.opex));
+    const projected = rev - bizExp;
+    c.innerHTML = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3>Financial Summary</h3>
+          <div style="display:flex;gap:8px">
+            <button class="btn secondary small" id="rp-refresh">Refresh Report</button>
+            <button class="btn small" id="rp-print">Print / Save as PDF</button>
+          </div>
+        </div>
+        ${help}
+        <table style="margin-top:16px">
+          <tbody>
+            <tr><td>Total Income</td><td class="mono">${peso(t.income)}</td></tr>
+            <tr><td>Total Expenses</td><td class="mono">${peso(t.totalExpenses)}</td></tr>
+            <tr><td>Current Balance</td><td class="mono">${peso(t.balance)}</td></tr>
+            <tr><td>Current Savings</td><td class="mono">${peso(t.currentSavings)}</td></tr>
+            <tr><td>Savings Goal Progress</td><td class="mono">${t.progress.toFixed(1)}%</td></tr>
+            <tr><td>Number of Recorded Expenses</td><td class="mono">${state.expenses.length}</td></tr>
+            <tr><td>Business Revenue</td><td class="mono">${peso(rev)}</td></tr>
+            <tr><td>Business Expenses</td><td class="mono">${peso(bizExp)}</td></tr>
+            <tr><td>Projected Business Profit / Loss</td><td class="mono" style="color:${projected>=0?'var(--green)':'var(--red)'};font-weight:700">${peso(projected)} (${projected>=0?'PROFIT':'LOSS'})</td></tr>
+          </tbody>
+        </table>
+      </div>
+      ${footerDisclaimer()}
+    `;
+    document.getElementById('rp-refresh').addEventListener('click', ()=>{ buildReport(); toast('Report refreshed.', 'success'); });
+    document.getElementById('rp-print').addEventListener('click', ()=> window.print());
+  }
+}
+
+/* ============================= SUBSCRIPTION ============================= */
+
+function renderSubscription(){
+  const c = document.getElementById('content');
+  const cur = state.subscription;
+  const st = subscriptionStatus();
+  const currentId = cur.planId;
+  const isActive = st.key === 'active' || st.key === 'ending';
+
+  let statusHtml;
+  if(st.key === 'none'){
+    statusHtml = `You don't have an active plan yet. Choose one below to unlock its tools \u2014 this is a demo subscription, no payment is processed.`;
+  } else if(st.key === 'expired'){
+    statusHtml = `Your <b>${st.plan.name}</b> plan ${st.label}. Your tools are locked until you renew or choose a new plan below.`;
+  } else {
+    statusHtml = `You're subscribed to <b>${st.plan.name}</b> (${cur.cycle === 'monthly' ? 'monthly' : 'yearly'} billing).
+      ${st.cancelled
+        ? `Auto-renewal is <b>off</b> \u2014 ${st.label.toLowerCase()}. Your tools stay unlocked until then.`
+        : `${st.label} \u2014 all tools included in your plan are unlocked.`}`;
+  }
+
+  c.innerHTML = `
+    <div class="card" style="margin-bottom:20px">
+      <h3>Your Subscription</h3>
+      <p style="color:var(--gray);font-size:13.5px;margin-top:6px">${statusHtml}</p>
+      ${currentId ? `
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          ${st.cancelled && isActive
+            ? `<button class="btn small" id="reactivate-plan">Reactivate Auto-Renewal</button>`
+            : (isActive ? `<button class="btn secondary small" id="renew-plan">Renew Now</button>
+                           <button class="btn danger small" id="cancel-plan">Cancel Auto-Renewal</button>`
+                        : `<button class="btn small" id="renew-plan">Renew Subscription</button>`)}
+        </div>` : ''}
+    </div>
+    <div class="plans-grid">
+      ${PLANS.map(p=>{
+        const isCurrent = currentId === p.id;
+        const incl = isCurrent && isActive;
+        return `
+        <div class="plan-card ${incl?'current':''}">
+          ${incl?'<span class="badge-current">Current Plan</span>':''}
+          ${isCurrent && !isActive?'<span class="badge-current" style="background:var(--gray)">Expired</span>':''}
+          <div class="pname">${p.name}</div>
+          <div class="pprice">${peso(p.price)}<span class="pperiod"> / year</span></div>
+          <div class="pperiod">${p.tagline}</div>
+          <div class="pdesc">${p.desc}</div>
+          <div style="margin-bottom:12px">${p.tools.map(tid=>`<span class="plan-chip">${TOOLS_META[tid].label}</span>`).join('')}</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn ${incl?'secondary':''} small" data-subscribe="${p.id}" data-cycle="yearly" ${incl?'disabled':''}>${incl?'Active':'Subscribe \u00b7 '+peso(p.price)+'/yr'}</button>
+            <button class="btn ghost small" data-subscribe="${p.id}" data-cycle="monthly" ${incl?'disabled':''}>Monthly \u00b7 ${peso(planCyclePrice(p,'monthly'))}/mo</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+
+  c.querySelectorAll('[data-subscribe]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-subscribe');
+      const cycle = btn.getAttribute('data-cycle');
+      subscribe(id, cycle);
+      toast('Subscribed to ' + PLANS.find(p=>p.id===id).name + ' (' + (cycle==='monthly'?'monthly':'yearly') + '). Your plan renews automatically.', 'success');
+      renderApp();
+    });
+  });
+  const renewBtn = document.getElementById('renew-plan');
+  if(renewBtn) renewBtn.addEventListener('click', ()=>{
+    renewSubscription();
+    toast('Subscription renewed \u2014 see your new renewal date above.', 'success');
+    renderApp();
+  });
+  const cancelBtn = document.getElementById('cancel-plan');
+  if(cancelBtn) cancelBtn.addEventListener('click', ()=>{
+    cancelSubscription();
+    toast('Auto-renewal cancelled. You keep access until your current period ends.');
+    renderApp();
+  });
+  const reactivateBtn = document.getElementById('reactivate-plan');
+  if(reactivateBtn) reactivateBtn.addEventListener('click', ()=>{
+    reactivateSubscription();
+    toast('Auto-renewal reactivated.', 'success');
+    renderApp();
+  });
+}
+
+
+/* ============================= SUPPORT / CONSULTATION ============================= */
+
+const CONSULT_TOPICS = ['Personal Budgeting','Savings Planning','Financial Education','Business Start-Up','Business Budgeting','Other'];
+
+function renderSupport(){
+  const c = document.getElementById('content');
+  c.innerHTML = `
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:14px">Request a Consultation</h3>
+        <div class="field"><label>Name</label><input type="text" id="cs-name" placeholder="Juan Dela Cruz"></div>
+        <div class="field"><label>Email</label><input type="email" id="cs-email" placeholder="juan@email.com"></div>
+        <div class="field"><label>Consultation Topic</label><select id="cs-topic">${CONSULT_TOPICS.map(t=>`<option>${t}</option>`).join('')}</select></div>
+        <div class="field"><label>Message</label><textarea id="cs-msg" placeholder="Tell us a bit about what you'd like help with"></textarea></div>
+        <div id="cs-error"></div>
+        <div id="cs-confirm"></div>
+        <button class="btn" id="cs-submit">Submit Request</button>
+      </div>
+      <div>
+        <div class="card">
+          <h3 style="margin-bottom:10px">Your Submitted Requests</h3>
+          <div id="cs-list">${renderConsultList()}</div>
+        </div>
+        ${footerDisclaimer()}
+      </div>
+    </div>
+  `;
+  document.getElementById('cs-submit').addEventListener('click', ()=>{
+    const name = val('cs-name').trim(), email = val('cs-email').trim(), topic = val('cs-topic'), msg = val('cs-msg').trim();
+    const err = document.getElementById('cs-error');
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if(!name || !emailOk || !msg){ err.innerHTML = `<div class="error-msg">Please enter your name, a valid email, and a message.</div>`; return; }
+    err.innerHTML = '';
+    state.consultations.unshift({id:uid(), name, email, topic, msg, date:new Date().toISOString()});
+    saveState();
+    document.getElementById('cs-confirm').innerHTML = `<div class="help" style="color:var(--green);font-weight:600;margin-top:-6px;margin-bottom:10px">Thank you, ${esc(name)}! Your request was received. Since this demo has no live backend, it's stored locally in your FINWISE data.</div>`;
+    ['cs-name','cs-email','cs-msg'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('cs-list').innerHTML = renderConsultList();
+    toast('Consultation request submitted.', 'success');
+  });
+}
+
+function renderConsultList(){
+  if(!state.consultations.length) return `<div class="empty-row">No requests submitted yet.</div>`;
+  return state.consultations.map(c=>`
+    <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between"><b>${esc(c.name)}</b><span class="tag">${esc(c.topic)}</span></div>
+      <div style="font-size:12px;color:var(--gray);margin-top:2px">${esc(c.email)} · ${new Date(c.date).toLocaleDateString('en-PH')}</div>
+      <div style="font-size:13px;margin-top:4px">${esc(c.msg)}</div>
+    </div>
+  `).join('');
+}
+
+/* ============================= PWA / "MAKE IT AN APP" ============================= */
+
+function roundRectPath(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+function makeIcon(size){
+  const cv = document.createElement('canvas'); cv.width = size; cv.height = size;
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#0B1F3B';
+  roundRectPath(ctx, 0, 0, size, size, size*0.22); ctx.fill();
+  ctx.fillStyle = '#2F6FED';
+  ctx.beginPath(); ctx.arc(size*0.775, size*0.235, size*0.085, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = "700 " + Math.round(size*0.52) + "px 'Sora', sans-serif";
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('F', size*0.44, size*0.565);
+  return cv.toDataURL('image/png');
+}
+
+let deferredInstallPrompt = null;
+
+function isStandalone(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function bindInstallButton(btn){
+  if(isStandalone()){ btn.classList.remove('show'); return; }
+  if(deferredInstallPrompt) btn.classList.add('show');
+  btn.addEventListener('click', async ()=>{
+    if(deferredInstallPrompt){
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      btn.classList.remove('show');
+      if(choice && choice.outcome === 'accepted') toast('FINWISE installed.', 'success');
+    } else if(/iphone|ipad|ipod/i.test(navigator.userAgent)){
+      toast('On iPhone/iPad: tap Share, then "Add to Home Screen".');
+    } else {
+      toast('Open your browser menu and choose "Install app" or "Add to Home Screen".');
+    }
+  });
+}
+
+window.addEventListener('beforeinstallprompt', (e)=>{
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  const btn = document.getElementById('install-btn');
+  if(btn) btn.classList.add('show');
+});
+window.addEventListener('appinstalled', ()=>{
+  deferredInstallPrompt = null;
+  toast('FINWISE installed.', 'success');
+});
+
+function setupPWA(){
+  try{
+    const icon192 = makeIcon(192), icon512 = makeIcon(512);
+    const manifest = {
+      name: 'FINWISE Financial Hub Co.',
+      short_name: 'FINWISE',
+      description: 'Think Finance. Think FINWISE. Personal and business finance planning.',
+      start_url: location.href.split('#')[0],
+      scope: location.href.split('#')[0],
+      display: 'standalone',
+      orientation: 'portrait-primary',
+      background_color: '#F1F4F9',
+      theme_color: '#0B1F3B',
+      icons: [
+        { src: icon192, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+        { src: icon512, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+      ]
+    };
+    const manifestUrl = URL.createObjectURL(new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'}));
+    let link = document.createElement('link'); link.rel = 'manifest'; link.href = manifestUrl; document.head.appendChild(link);
+    let appleIcon = document.createElement('link'); appleIcon.rel = 'apple-touch-icon'; appleIcon.href = icon192; document.head.appendChild(appleIcon);
+    let favicon = document.createElement('link'); favicon.rel = 'icon'; favicon.type='image/png'; favicon.href = icon192; document.head.appendChild(favicon);
+  }catch(e){ /* icon/manifest generation is a non-critical enhancement */ }
+
+  try{
+    if('serviceWorker' in navigator){
+      const swSource = "self.addEventListener('install',e=>self.skipWaiting());" +
+        "self.addEventListener('activate',e=>self.clients.claim());" +
+        "self.addEventListener('fetch',e=>{});";
+      const swUrl = URL.createObjectURL(new Blob([swSource], {type:'application/javascript'}));
+      navigator.serviceWorker.register(swUrl).catch(()=>{});
+    }
+  }catch(e){ /* offline support is a non-critical enhancement */ }
+}
+
+/* ============================= INIT ============================= */
+setupPWA();
+boot();
+</script>
+</body>
+</html>
